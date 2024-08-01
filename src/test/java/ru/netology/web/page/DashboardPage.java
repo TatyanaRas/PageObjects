@@ -36,16 +36,17 @@ public class DashboardPage {
         return extractBalance(text);
     }
 
-//выбор карты для пополнения
+    //выбор карты для пополнения
     public TransferPage selectCardToTransfer(DataHelper.CardInfo cardInfo) {
         cards.findBy(Condition.attribute("data-test-id", cardInfo.getTestId())).$("button").click();
         return new TransferPage();
     }
 
-    public  void reloadDashboardPage() {//для перезагрузки страницы дашборда
+    public void reloadDashboardPage() {//для перезагрузки страницы дашборда
         reloadButton.click();
         heading.shouldBe(visible);
     }
+
     private int extractBalance(String text) {
         var start = text.indexOf(balanceStart);
         var finish = text.indexOf(balanceFinish);

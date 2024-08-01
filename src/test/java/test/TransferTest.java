@@ -15,7 +15,6 @@ import static ru.netology.web.data.DataHelper.generateInvalidAmount;
 import static ru.netology.web.data.DataHelper.generateValidAmount;
 
 
-
 public class TransferTest {
     DashboardPage dashboardPage;
     CardInfo firstCardInfo;
@@ -32,8 +31,9 @@ public class TransferTest {
         dashboardPage = verificationPage.validVerify(verificationCode);
         firstCardInfo = DataHelper.getFirstCardInfo();
         secondCardInfo = DataHelper.getSecondCardInfo();
-        firstCardBalance = dashboardPage.getCardBalance(DataHelper.getMaskedNumber(firstCardInfo.getCardNumber()));
+        //firstCardBalance = dashboardPage.getCardBalance(DataHelper.getMaskedNumber(firstCardInfo.getCardNumber()));
         secondCardBalance = dashboardPage.getCardBalance(1);
+        firstCardBalance = dashboardPage.getCardBalance(2);
     }
 
 
@@ -45,10 +45,11 @@ public class TransferTest {
         var transferPage = dashboardPage.selectCardToTransfer(secondCardInfo);
         dashboardPage = transferPage.makeValidTransfer(String.valueOf(amount), firstCardInfo);
         dashboardPage.reloadDashboardPage();
-       var actualBalanceFirstCard = dashboardPage.getCardBalance(getMaskedNumber(firstCardInfo.getCardNumber()));
-         var actualBalanceSecondCard = dashboardPage.getCardBalance(1);
+        var actualBalanceSecondCard = dashboardPage.getCardBalance(1);
+        var actualBalanceFirstCard = dashboardPage.getCardBalance(2);
         assertAll(() -> assertEquals(expectedBalanceFirstCard, actualBalanceFirstCard), () -> assertEquals(expectedBalanceSecondCard, actualBalanceSecondCard));
     }
+
     @Test
     void shouldTGetErrorMessageIfAmountMoreBalance() {
         var amount = generateInvalidAmount(secondCardBalance);
@@ -56,8 +57,9 @@ public class TransferTest {
         transferPage.makeTransfer(String.valueOf(amount), secondCardInfo);
         transferPage.findErrorMessage("Ошибка. На вашей карте недостаточно средств для перевода.");
         dashboardPage.reloadDashboardPage();
-        var actualBalanceFirstCard = dashboardPage.getCardBalance(getMaskedNumber(firstCardInfo.getCardNumber()));
-        var actualBalanceSecondCard = dashboardPage.getCardBalance(getMaskedNumber(secondCardInfo.getCardNumber()));
+        var actualBalanceSecondCard = dashboardPage.getCardBalance(1);
+        var actualBalanceFirstCard = dashboardPage.getCardBalance(2);
+
         assertAll(() -> assertEquals(firstCardBalance, actualBalanceFirstCard),
                 () -> assertEquals(secondCardBalance, actualBalanceSecondCard));
     }

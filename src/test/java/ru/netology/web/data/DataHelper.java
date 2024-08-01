@@ -8,13 +8,13 @@ public class DataHelper {
     private DataHelper() {
     }
 
-public static String getVerificationCode() {
-    return "12345";
-}
+    public static String getVerificationCode() {
+        return "12345";
+    }
 
     public static AuthInfo getAuthInfo() {
 
-        return new AuthInfo("vasya", "qwerty123");;
+        return new AuthInfo("vasya", "qwerty123");
     }
 
     public static CardInfo getFirstCardInfo() {
@@ -41,13 +41,13 @@ public static String getVerificationCode() {
 
     }
 
-           @Value
+    @Value
     public static class CardInfo {
         String cardNumber;
         String testId;
     }
 
-        @Value
+    @Value
     public static class AuthInfo {
         private String login;
         private String password;
