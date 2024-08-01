@@ -24,7 +24,7 @@ public class TransferPage {
     }
 
     public DashboardPage makeValidTransfer(String amountToTransfer, DataHelper.CardInfo cardInfo) {
-        makeTransfer(amountToTransfer.cardInfo);
+        makeTransfer(amountToTransfer, cardInfo);
         return new DashboardPage();
     }
 

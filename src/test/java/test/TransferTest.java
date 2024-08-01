@@ -11,8 +11,9 @@ import ru.netology.web.page.LoginPage;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static ru.netology.web.data.DataHelper.generateInvalidAmount;
 import static ru.netology.web.data.DataHelper.generateValidAmount;
-//import static ru.netology.web.data.DataHelper.getMaskedNumber;
+
 
 
 public class TransferTest {
@@ -44,9 +45,21 @@ public class TransferTest {
         var transferPage = dashboardPage.selectCardToTransfer(secondCardInfo);
         dashboardPage = transferPage.makeValidTransfer(String.valueOf(amount), firstCardInfo);
         dashboardPage.reloadDashboardPage();
-        var actualBalanceFirstCard = dashboardPage.getCardBalance(getMaskedNumber(firstCardInfo.getCardNumber()));
-        var actualBalanceSecondCard = dashboardPage.getCardBalance(1);
+       var actualBalanceFirstCard = dashboardPage.getCardBalance(getMaskedNumber(firstCardInfo.getCardNumber()));
+         var actualBalanceSecondCard = dashboardPage.getCardBalance(1);
         assertAll(() -> assertEquals(expectedBalanceFirstCard, actualBalanceFirstCard), () -> assertEquals(expectedBalanceSecondCard, actualBalanceSecondCard));
+    }
+    @Test
+    void shouldTGetErrorMessageIfAmountMoreBalance() {
+        var amount = generateInvalidAmount(secondCardBalance);
+        var transferPage = dashboardPage.selectCardToTransfer(firstCardInfo);
+        transferPage.makeTransfer(String.valueOf(amount), secondCardInfo);
+        transferPage.findErrorMessage("Ошибка. На вашей карте недостаточно средств для перевода.");
+        dashboardPage.reloadDashboardPage();
+        var actualBalanceFirstCard = dashboardPage.getCardBalance(getMaskedNumber(firstCardInfo.getCardNumber()));
+        var actualBalanceSecondCard = dashboardPage.getCardBalance(getMaskedNumber(secondCardInfo.getCardNumber()));
+        assertAll(() -> assertEquals(firstCardBalance, actualBalanceFirstCard),
+                () -> assertEquals(secondCardBalance, actualBalanceSecondCard));
     }
 }
 
