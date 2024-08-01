@@ -25,4 +25,9 @@ test {
     useJUnitPlatform()
     systemProperty 'selenide.headless', System.getProperty('selenide.headless')
     systemProperty 'chromeoptions.prefs', System.getProperty('chromoptions.prefs', "profile.password_manager_leak_datection=false")
+
 }
+
+
+
+
