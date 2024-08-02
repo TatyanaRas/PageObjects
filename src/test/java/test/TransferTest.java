@@ -47,7 +47,8 @@ public class TransferTest {
         dashboardPage.reloadDashboardPage();
         var actualBalanceSecondCard = dashboardPage.getCardBalance(1);
         var actualBalanceFirstCard = dashboardPage.getCardBalance(2);
-        assertAll(() -> assertEquals(expectedBalanceFirstCard, actualBalanceFirstCard), () -> assertEquals(expectedBalanceSecondCard, actualBalanceSecondCard));
+        assertAll(() -> assertEquals(expectedBalanceFirstCard, actualBalanceFirstCard),
+                () -> assertEquals(expectedBalanceSecondCard, actualBalanceSecondCard));
     }
 
     @Test
