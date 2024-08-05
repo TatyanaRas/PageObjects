@@ -31,9 +31,9 @@ public class TransferTest {
         dashboardPage = verificationPage.validVerify(verificationCode);
         firstCardInfo = DataHelper.getFirstCardInfo();
         secondCardInfo = DataHelper.getSecondCardInfo();
-        //firstCardBalance = dashboardPage.getCardBalance(DataHelper.getMaskedNumber(firstCardInfo.getCardNumber()));
+
+        firstCardBalance = dashboardPage.getCardBalance(0);
         secondCardBalance = dashboardPage.getCardBalance(1);
-        firstCardBalance = dashboardPage.getCardBalance(2);
     }
 
 
@@ -45,8 +45,9 @@ public class TransferTest {
         var transferPage = dashboardPage.selectCardToTransfer(secondCardInfo);
         dashboardPage = transferPage.makeValidTransfer(String.valueOf(amount), firstCardInfo);
         dashboardPage.reloadDashboardPage();
+
+        var actualBalanceFirstCard = dashboardPage.getCardBalance(0);
         var actualBalanceSecondCard = dashboardPage.getCardBalance(1);
-        var actualBalanceFirstCard = dashboardPage.getCardBalance(2);
         assertAll(() -> assertEquals(expectedBalanceFirstCard, actualBalanceFirstCard),
                 () -> assertEquals(expectedBalanceSecondCard, actualBalanceSecondCard));
     }
@@ -58,8 +59,9 @@ public class TransferTest {
         transferPage.makeTransfer(String.valueOf(amount), secondCardInfo);
         transferPage.findErrorMessage("Ошибка. На вашей карте недостаточно средств для перевода.");
         dashboardPage.reloadDashboardPage();
+        var actualBalanceFirstCard = dashboardPage.getCardBalance(0);
         var actualBalanceSecondCard = dashboardPage.getCardBalance(1);
-        var actualBalanceFirstCard = dashboardPage.getCardBalance(2);
+
 
         assertAll(() -> assertEquals(firstCardBalance, actualBalanceFirstCard),
                 () -> assertEquals(secondCardBalance, actualBalanceSecondCard));
